@@ -23,5 +23,6 @@ _testmain.go
 *.test
 
 gohttpbin
+gohttpbin_*
 Godeps/_workspace
 Godeps/Readme
