@@ -6,50 +6,38 @@ import (
   "flag"
   "fmt"
   "log"
-  "encoding/json"
 )
 
 var port = flag.Int("port", 8080, "port to bind")
 
-const (
-  ArgsKey = "args"
-  HeadersKey = "headers"
-  UrlKey = "url"
-  OriginKey = "origin"
-)
-
 func get(resp http.ResponseWriter, req *http.Request) {
-  m := map[string]interface{}{}
-  m[HeadersKey] = parseHeaders(req)
-  m[ArgsKey] = parseArgs(req)
-  m[UrlKey] = fmt.Sprintf("%s%v", req.Host, req.RequestURI)
-  m[OriginKey] = req.Host
-
-  marshalled, err := json.MarshalIndent(m, "", "  ")
-  if err != nil {
-    http.Error(resp, err.Error(), http.StatusInternalServerError)
-    return
-  }
-  resp.Write(marshalled)
+  m := getBase(req)
+  output(resp, m)
 }
 
 func post(resp http.ResponseWriter, req *http.Request) {
-
+  m := getBase(req)
+  output(resp, m)
 }
 
 func put(resp http.ResponseWriter, req *http.Request) {
+  m := getBase(req)
+  output(resp, m)
 }
 
 func delete(resp http.ResponseWriter, req *http.Request) {
-
+  m := getBase(req)
+  output(resp, m)
 }
 
 func head(resp http.ResponseWriter, req *http.Request) {
-
+  m := getBase(req)
+  output(resp, m)
 }
 
 func patch(resp http.ResponseWriter, req *http.Request) {
-
+  m := getBase(req)
+  output(resp, m)
 }
 
 func main() {
