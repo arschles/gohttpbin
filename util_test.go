@@ -64,10 +64,11 @@ func TestParseArgs(t *testing.T) {
 	g := Goblin(t)
 	g.Describe("parseArgs", func() {
 		g.It("should parse query string arguments and choose the first value if there are duplicates", func() {
-			req, err := http.NewRequest("GET", "http://test.com?a=b&a=c", nil)
+			req, err := http.NewRequest("GET", "http://test.com?a=b&a=c&c=d", nil)
 			g.Assert(err).Equal(nil)
 			args := parseArgs(req)
 			g.Assert(args["a"]).Equal("b")
+			g.Assert(args["c"]).Equal("d")
 		})
 	})
 }
