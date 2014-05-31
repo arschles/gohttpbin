@@ -1,4 +1,4 @@
-package main
+package gohttpbin
 
 import (
 	"encoding/json"
