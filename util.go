@@ -8,7 +8,7 @@ import (
 )
 
 type Headers map[string]string
-type Args map[string][]string
+type Args map[string]string
 
 const (
 	ArgsKey    = "args"
@@ -48,7 +48,13 @@ func parseHeaders(req *http.Request) Headers {
 }
 
 func parseArgs(req *http.Request) Args {
-	return Args(req.URL.Query())
+	ret := Args{}
+	for key, vals := range(req.URL.Query()) {
+		if len(vals) > 0 {
+			ret[key] = vals[0]
+		}
+	}
+	return ret
 }
 
 func readBody(req *http.Request) []byte {
