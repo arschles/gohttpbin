@@ -4,6 +4,7 @@ import (
   "net/http"
   "encoding/json"
   "fmt"
+  "io/ioutil"
 )
 
 type Headers map[string]string
@@ -14,6 +15,7 @@ const (
   HeadersKey = "headers"
   UrlKey = "url"
   OriginKey = "origin"
+  BodyKey = "body"
 )
 
 func output(resp http.ResponseWriter, m map[string]interface{}) {
@@ -47,4 +49,12 @@ func parseHeaders(req *http.Request) Headers {
 
 func parseArgs(req *http.Request) Args {
   return Args(req.URL.Query())
+}
+
+func readBody(req *http.Request) []byte {
+  body, err := ioutil.ReadAll(req.Body)
+  if err != nil {
+    return []byte{}
+  }
+  return body
 }

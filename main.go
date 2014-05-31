@@ -17,11 +17,13 @@ func get(resp http.ResponseWriter, req *http.Request) {
 
 func post(resp http.ResponseWriter, req *http.Request) {
   m := getBase(req)
+  m[BodyKey] = string(readBody(req))
   output(resp, m)
 }
 
 func put(resp http.ResponseWriter, req *http.Request) {
   m := getBase(req)
+  m[BodyKey] = string(readBody(req))
   output(resp, m)
 }
 
