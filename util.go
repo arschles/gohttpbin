@@ -15,7 +15,7 @@ const (
 	HeadersKey = "headers"
 	UrlKey     = "url"
 	OriginKey  = "origin"
-	BodyKey    = "body"
+	DataKey    = "data"
 )
 
 func output(resp http.ResponseWriter, m map[string]interface{}) {
