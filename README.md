@@ -3,6 +3,8 @@ This project implements a subset of the functionality of httpbin.org in
 [Go](golang.org). It is deployed on
 [Google App Engine](https://developers.google.com/appengine/).
 
+The production URL for this service is gohttpbin.appspot.com.
+
 # Development Environment
 You can run the entire development environment, including the
 [GAE development server](https://developers.google.com/appengine/docs/go/gettingstarted/devenvironment)
