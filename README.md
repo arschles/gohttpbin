@@ -16,3 +16,7 @@ To get it working,
 
 When in the VM, `cd /vagrant` and type `goapp serve` to run the GAE dev server.
 Open a new terminal window, and `curl localhost:8080/get` to see it working.
+
+# Deploying to GAE
+To deploy, use
+`appcfg.py --oauth2 --no_cookies --noauth_local_webserver update .`
