@@ -7,9 +7,6 @@ import (
 	"net/http"
 )
 
-type Headers map[string]string
-type Args map[string]string
-
 const (
 	ArgsKey    = "args"
 	HeadersKey = "headers"
@@ -36,10 +33,9 @@ func getBase(req *http.Request) map[string]interface{} {
 	return m
 }
 
-func parseHeaders(req *http.Request) Headers {
-	hdrs := req.Header
-	ret := Headers{}
-	for name, vals := range hdrs {
+func parseHeaders(req *http.Request) map[string]string {
+	ret := map[string]string{}
+	for name, vals := range(req.Header) {
 		if len(vals) > 0 {
 			ret[name] = vals[0]
 		}
@@ -47,8 +43,8 @@ func parseHeaders(req *http.Request) Headers {
 	return ret
 }
 
-func parseArgs(req *http.Request) Args {
-	ret := Args{}
+func parseArgs(req *http.Request) map[string]string {
+	ret := map[string]string{}
 	for key, vals := range(req.URL.Query()) {
 		if len(vals) > 0 {
 			ret[key] = vals[0]
