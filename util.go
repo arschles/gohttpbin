@@ -35,7 +35,7 @@ func getBase(req *http.Request) map[string]interface{} {
 
 func parseHeaders(req *http.Request) map[string]string {
 	ret := map[string]string{}
-	for name, vals := range(req.Header) {
+	for name, vals := range req.Header {
 		if len(vals) > 0 {
 			ret[name] = vals[0]
 		}
@@ -45,7 +45,7 @@ func parseHeaders(req *http.Request) map[string]string {
 
 func parseArgs(req *http.Request) map[string]string {
 	ret := map[string]string{}
-	for key, vals := range(req.URL.Query()) {
+	for key, vals := range req.URL.Query() {
 		if len(vals) > 0 {
 			ret[key] = vals[0]
 		}
