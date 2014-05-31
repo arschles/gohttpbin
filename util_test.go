@@ -6,7 +6,6 @@ import (
 	. "github.com/franela/goblin"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
 	"testing"
 )
 
@@ -28,23 +27,19 @@ func TestGetBase(t *testing.T) {
 	g := Goblin(t)
 	g.Describe("getBase", func() {
 		g.It("should correctly assemble all basic output into a map", func() {
+			req, err := http.NewRequest("GET", "http://test.com/abc", nil)
+			g.Assert(err).Equal(nil)
+
 			headers := http.Header{
 				"a": []string{"b", "c"},
 				"b": []string{"c"},
 			}
-			rawQuery := "a=b&c=d"
-			url := url.URL{RawQuery: rawQuery}
-			request := http.Request{
-				Header:     headers,
-				URL:        &url,
-				Host:       "testHost",
-				RequestURI: "/abc",
-			}
-			resultMap := getBase(&request)
-			g.Assert(resultMap[HeadersKey]).Equal(parseHeaders(&request))
-			g.Assert(resultMap[ArgsKey]).Equal(parseArgs(&request))
-			g.Assert(resultMap[UrlKey]).Equal(fmt.Sprintf("%s%v", request.Host, request.RequestURI))
-			g.Assert(resultMap[OriginKey]).Equal(request.Host)
+			req.Header = headers
+			resultMap := getBase(req)
+			g.Assert(resultMap[HeadersKey]).Equal(parseHeaders(req))
+			g.Assert(resultMap[ArgsKey]).Equal(parseArgs(req))
+			g.Assert(resultMap[UrlKey]).Equal(fmt.Sprintf("%s%v", req.Host, req.RequestURI))
+			g.Assert(resultMap[OriginKey]).Equal(req.Host)
 		})
 	})
 }
@@ -61,6 +56,18 @@ func TestParseHeaders(t *testing.T) {
 			resultHeaders := parseHeaders(&req)
 			g.Assert(resultHeaders["a"]).Equal("b")
 			g.Assert(resultHeaders["b"]).Equal("c")
+		})
+	})
+}
+
+func TestParseArgs(t *testing.T) {
+	g := Goblin(t)
+	g.Describe("parseArgs", func() {
+		g.It("should parse query string arguments and choose the first value if there are duplicates", func() {
+			req, err := http.NewRequest("GET", "http://test.com?a=b&a=c", nil)
+			g.Assert(err).Equal(nil)
+			args := parseArgs(req)
+			g.Assert(args["a"]).Equal("b")
 		})
 	})
 }
