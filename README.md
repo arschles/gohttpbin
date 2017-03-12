@@ -1,3 +1,10 @@
+# Deprecated
+
+This project is no longer maintained and is officially __deprecated__. Please see the following related repositories:
+
+- https://github.com/ahmetb/go-httpbin for a Go SDK similar to this server that you can use in your app
+- https://github.com/arschles/kubehttpbin for a server similar to this one that uses that uses [go-httpbin](https://github.com/ahmetb/go-httpbin)
+
 # gohttpbin
 This project implements a subset of the functionality of httpbin.org in
 [Go](golang.org). It is deployed on
